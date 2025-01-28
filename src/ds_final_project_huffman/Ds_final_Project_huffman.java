@@ -12,6 +12,10 @@ public class Ds_final_Project_huffman {
             String str = "D:\\File.txt";
             Map<Character, Integer> charFreq = HuffmanCompression.Calculate_Frequency(str);
             
+            Node node = HuffmanCompression.buildHuffmanTree(charFreq);
+            
+            System.out.print(node);
+            
             for(Map.Entry<Character , Integer> entry : charFreq.entrySet()){
                 System.out.println(entry.getKey() + " : " + entry.getValue());
             }

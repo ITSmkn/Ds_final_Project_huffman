@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.File;
 import java.io.IOException;
+import java.util.PriorityQueue;
 
 class Node {
     char character;
@@ -15,6 +16,11 @@ class Node {
         this.character = character;
         this.frequency = frequency;
         left = right = null;
+    }
+    
+    @Override
+    public String toString(){
+        return "character :" + this.character + "  frequency :" + this.frequency + "\n";
     }
  
 }
@@ -48,8 +54,23 @@ public class HuffmanCompression {
     
     
     public static Node buildHuffmanTree(Map<Character, Integer> charFreq){
+        // we want the Nodes with smaller Frequency to be extracted from the Priority queue sooner ...
+        PriorityQueue<Node> minHeap = new PriorityQueue<>((n1,n2) -> n1.frequency - n2.frequency);
         
-        return (new Node('A' , 10));
+        for(Map.Entry<Character, Integer> entry : charFreq.entrySet()){
+            minHeap.add(new Node(entry.getKey(), entry.getValue()));
+        }
+        
+        while(minHeap.size() > 1){
+            Node left = minHeap.poll();
+            Node right = minHeap.poll();
+            Node internalNode = new Node('\u0000', left.frequency + right.frequency);
+            internalNode.left = left;
+            internalNode.right = right;
+            minHeap.add(internalNode);
+        }
+        
+        return minHeap.poll();
     }
     
 }
