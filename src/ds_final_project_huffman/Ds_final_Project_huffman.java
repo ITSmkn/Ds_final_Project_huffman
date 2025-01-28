@@ -1,20 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package ds_final_project_huffman;
+ 
+import java.io.IOException;
+import java.util.Map;
 
-/**
- *
- * @author Asus
- */
 public class Ds_final_Project_huffman {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+ 
+    public static void main(String[] args) { 
+        
+        try{
+            String str = "D:\\File.txt";
+            Map<Character, Integer> charFreq = HuffmanCompression.Calculate_Frequency(str);
+            
+            for(Map.Entry<Character , Integer> entry : charFreq.entrySet()){
+                System.out.println(entry.getKey() + " : " + entry.getValue());
+            }
+          
+        }
+        
+        catch(IOException e){
+            System.err.print("Error!!!!");
+        }
+ 
+            
+//        try{
+//        String res = FileReader.readFile("D:\\File.txt");
+//        System.out.println(res);
+//        }
+//        catch(IOException e){
+//            System.err.print("error");
+//        }
+            
+    }  
 }
