@@ -6,6 +6,7 @@ import java.util.Map;
 import java.io.File;
 import java.io.IOException;
 import java.util.PriorityQueue;
+import java.util.ArrayList;
 
 class Node {
     char character;
@@ -71,6 +72,18 @@ public class HuffmanCompression {
         }
         
         return minHeap.poll();
+    }
+    
+    // this recursive function turns letters into binary code using given tree!
+    public static void Encode(Node root , String binary){
+        if(root.left == null && root.right == null){
+            System.out.print(root.character + ":" + binary + "\n");
+            return;
+        }
+        else{
+            Encode(root.left , binary+"0");
+            Encode(root.right , binary+"1");
+        }
     }
     
 }

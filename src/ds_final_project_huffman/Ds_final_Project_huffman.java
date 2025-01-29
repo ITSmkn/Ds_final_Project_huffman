@@ -8,6 +8,9 @@ public class Ds_final_Project_huffman {
  
     public static void main(String[] args) { 
         
+//        int b1 = 0b1011101;
+//        String s = Integer.toBinaryString(b1);
+        
         try{
             String str = "D:\\File.txt";
             Map<Character, Integer> charFreq = HuffmanCompression.Calculate_Frequency(str);
@@ -19,6 +22,8 @@ public class Ds_final_Project_huffman {
             for(Map.Entry<Character , Integer> entry : charFreq.entrySet()){
                 System.out.println(entry.getKey() + " : " + entry.getValue());
             }
+            
+            HuffmanCompression.Encode(node, "");
           
         }
         
