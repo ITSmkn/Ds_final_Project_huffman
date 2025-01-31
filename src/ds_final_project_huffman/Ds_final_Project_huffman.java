@@ -10,8 +10,6 @@ public class Ds_final_Project_huffman {
  
     public static void main(String[] args) { 
                 
-//        int b1 = 0b1011101;
-//        String s = Integer.toBinaryString(b1);
         
         try{
             String str = "D:\\File.txt";
@@ -36,9 +34,11 @@ public class Ds_final_Project_huffman {
             HuffmanCompression.WriteCodedFile("D:\\File.txt", "D:\\compressed.txt", BinaryCodes);
             
             Map<String , Character> bn = HuffmanCompression.readCodeTable("D:\\compressed.txt");
-            for(Map.Entry<String , Character> entry : bn.entrySet()){
-                System.out.println(entry.getKey() + " : " + entry.getValue());
-            }
+//            for(Map.Entry<String , Character> entry : bn.entrySet()){
+//                System.out.println(entry.getKey() + " : " + entry.getValue());
+//            }
+
+            HuffmanCompression.EncodeCodedFile("D:\\compressed.txt", "D:\\File2.txt", bn);
           
         }
         

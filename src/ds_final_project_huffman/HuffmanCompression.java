@@ -133,11 +133,38 @@ public class HuffmanCompression {
                 break;
             }
             String Code = scanner.next();
-            binaryCodes.put(Code, Char.charAt(0));
-             
-        }
-        
-        
+            binaryCodes.put(Code, Char.charAt(0));   
+        }    
         return binaryCodes;
+    }
+    
+// #########################################################################################################################
+    
+    public static void EncodeCodedFile(String CodedFilePath , String NewFilePath , Map<String , Character> binaryCodes)throws IOException{
+        
+        File file = new File(CodedFilePath);
+        Scanner scanner = new Scanner(file);
+        
+        BufferedWriter writer = new BufferedWriter(new FileWriter(NewFilePath));
+        
+        //for skipping the code table ...
+        while(!scanner.next().equals("end")) scanner.next();
+        
+        while(scanner.hasNext()){
+            String str = scanner.next();
+            String charCode = "";
+            
+            for(int i = 0 ; i < str.length() ; i++){
+                charCode += str.charAt(i);
+                if(binaryCodes.get(charCode) != null){
+                    writer.write(binaryCodes.get(charCode));
+                    charCode = "";
+                }
+            }
+            
+            writer.write(" ");         
+        }
+        writer.close();
+                  
     }
 }
