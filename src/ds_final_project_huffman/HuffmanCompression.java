@@ -2,20 +2,20 @@ package ds_final_project_huffman;
 
 import java.util.Scanner;
 import java.util.HashMap;
-import java.util.Map;
-import java.io.File;
-import java.io.IOException;
-import java.util.PriorityQueue;
-import java.util.ArrayList;
+import java.util.Map; 
+import java.util.PriorityQueue; 
+import java.io.*;
 
 class Node {
     char character;
     int frequency;
+    String Code;
     Node left , right;
     
     Node(char character, int frequency){
         this.character = character;
         this.frequency = frequency;
+        Code = "";
         left = right = null;
     }
     
@@ -27,7 +27,7 @@ class Node {
 }
 
 public class HuffmanCompression {
-  
+     
     // Character -> key -> character| Interger -> data -> frequency
     public static Map<Character , Integer> Calculate_Frequency(String fileName) throws IOException{
         Map<Character , Integer> charFreq = new HashMap<>();
@@ -53,7 +53,7 @@ public class HuffmanCompression {
         return charFreq;
     }
     
-    
+// #########################################################################################################################    
     public static Node buildHuffmanTree(Map<Character, Integer> charFreq){
         // we want the Nodes with smaller Frequency to be extracted from the Priority queue sooner ...
         PriorityQueue<Node> minHeap = new PriorityQueue<>((n1,n2) -> n1.frequency - n2.frequency);
@@ -73,17 +73,71 @@ public class HuffmanCompression {
         
         return minHeap.poll();
     }
+
+// #########################################################################################################################
     
     // this recursive function turns letters into binary code using given tree!
-    public static void Encode(Node root , String binary){
+    public static void Encode(Node root , String binary , Map<Character , String> BinaryCodes){ 
+        
         if(root.left == null && root.right == null){
-            System.out.print(root.character + ":" + binary + "\n");
+            root.Code = binary;
+            BinaryCodes.put(root.character , root.Code);
             return;
         }
         else{
-            Encode(root.left , binary+"0");
-            Encode(root.right , binary+"1");
+            Encode(root.left , binary+"0" , BinaryCodes);
+            Encode(root.right , binary+"1" , BinaryCodes);
         }
     }
     
+// #########################################################################################################################   
+  
+    public static void WriteCodedFile(String InputPath , String OutputPath , Map<Character , String> BinaryCodes) throws IOException{
+        
+        try( BufferedReader reader = new BufferedReader(new FileReader(InputPath)) ; 
+            BufferedWriter writer = new BufferedWriter(new FileWriter(OutputPath)) ){
+            
+            for(Map.Entry<Character,String> entry : BinaryCodes.entrySet()){       
+                writer.write(entry.getKey() + " " + entry.getValue() + "\n");
+            }
+            // the following line marks the end of the code table!
+            writer.write("end\n");
+            
+            int character;
+            while((character = reader.read()) != -1){ 
+                char c = (char) character;
+                String code = BinaryCodes.get(c);
+                if(code != null){
+                    writer.write(code);
+                }
+                else{
+                    writer.write(c);
+                }
+
+            }   
+        }
+    }  
+    
+// #########################################################################################################################    
+
+    public static Map<String , Character> readCodeTable(String CodedFilePath)throws IOException{
+        // in the following hashmap , 
+        Map<String , Character> binaryCodes = new HashMap<>();
+        
+        File file = new File(CodedFilePath);
+        Scanner scanner = new Scanner(file);
+        
+        while(scanner.hasNext()){
+            String Char = scanner.next();
+            if(Char.equals("end")){
+                break;
+            }
+            String Code = scanner.next();
+            binaryCodes.put(Code, Char.charAt(0));
+             
+        }
+        
+        
+        return binaryCodes;
+    }
 }
