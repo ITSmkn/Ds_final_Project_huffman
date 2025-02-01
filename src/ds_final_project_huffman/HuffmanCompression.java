@@ -55,6 +55,7 @@ public class HuffmanCompression {
     
 // #########################################################################################################################    
     public static Node buildHuffmanTree(Map<Character, Integer> charFreq){
+        
         // we want the Nodes with smaller Frequency to be extracted from the Priority queue sooner ...
         PriorityQueue<Node> minHeap = new PriorityQueue<>((n1,n2) -> n1.frequency - n2.frequency);
         
@@ -77,7 +78,7 @@ public class HuffmanCompression {
 // #########################################################################################################################
     
     // this recursive function turns letters into binary code using given tree!
-    public static void Encode(Node root , String binary , Map<Character , String> BinaryCodes){ 
+    public static void EncodeCharacters(Node root , String binary , Map<Character , String> BinaryCodes){ 
         
         if(root.left == null && root.right == null){
             root.Code = binary;
@@ -85,8 +86,8 @@ public class HuffmanCompression {
             return;
         }
         else{
-            Encode(root.left , binary+"0" , BinaryCodes);
-            Encode(root.right , binary+"1" , BinaryCodes);
+            EncodeCharacters(root.left , binary+"0" , BinaryCodes);
+            EncodeCharacters(root.right , binary+"1" , BinaryCodes);
         }
     }
     
@@ -140,7 +141,7 @@ public class HuffmanCompression {
     
 // #########################################################################################################################
     
-    public static void EncodeCodedFile(String CodedFilePath , String NewFilePath , Map<String , Character> binaryCodes)throws IOException{
+    public static void DecodeCodedFile(String CodedFilePath , String NewFilePath , Map<String , Character> binaryCodes)throws IOException{
         
         File file = new File(CodedFilePath);
         Scanner scanner = new Scanner(file);
