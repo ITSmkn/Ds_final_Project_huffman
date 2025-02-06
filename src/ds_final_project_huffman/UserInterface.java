@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map; 
+import javax.swing.border.MatteBorder;
 
 public class UserInterface {
     public UserInterface(){
@@ -28,25 +29,29 @@ public class UserInterface {
         
         JButton EncodeButton = new JButton("Encode selected file");
         EncodeButton.setBounds(275,170,250,45);
-        EncodeButton.setBackground(new Color(128, 0, 128));
+        EncodeButton.setBackground(new Color(28, 0, 58));
         EncodeButton.setForeground(Color.WHITE);
+        EncodeButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
         
         
         JButton DecodeButton = new JButton("Decode selected file");  
         DecodeButton.setBounds(275,230,250,45);
-        DecodeButton.setBackground(new Color(128, 0, 128));
+        DecodeButton.setBackground(new Color(28, 0, 58));
         DecodeButton.setForeground(Color.WHITE);
+        DecodeButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
         
 
         JButton openFileToEncodeItButton = new JButton("Open File"); 
         openFileToEncodeItButton.setBounds(280,200,250,45);
-        openFileToEncodeItButton.setBackground(new Color(128, 0, 128));
+        openFileToEncodeItButton.setBackground(new Color(28, 0, 58));
         openFileToEncodeItButton.setForeground(Color.WHITE);
+        openFileToEncodeItButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
         
         JButton openFileToDecodeItButton = new JButton("Open File"); 
         openFileToDecodeItButton.setBounds(280,200,250,45);
-        openFileToDecodeItButton.setBackground(new Color(128, 0, 128));
+        openFileToDecodeItButton.setBackground(new Color(28, 0, 58));
         openFileToDecodeItButton.setForeground(Color.WHITE);
+        openFileToDecodeItButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
         
 
         
@@ -100,6 +105,7 @@ public class UserInterface {
         OK.setBounds(140,140,150,40);
         OK.setBackground(new Color(28, 0, 58));
         OK.setForeground(Color.WHITE);
+        OK.setBorder(new MatteBorder(2, 2, 2, 2, new Color(102, 0, 153)));
         
         JLabel L3 = new JLabel("- The Action was performed Successfully -");         
         L3.setBounds(80,75,300,30);
@@ -195,7 +201,7 @@ public class UserInterface {
             }
             
             catch(IOException P){
-                System.err.print(P.getMessage());
+                System.err.print("Encoding was not successful!");
             }
         }
         });
@@ -238,7 +244,7 @@ public class UserInterface {
             }
             
             catch(IOException P){
-                System.err.print(P.getMessage());
+                System.err.print("Decoding was not successful!");
             }
         }
         });
