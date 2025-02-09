@@ -78,16 +78,20 @@ public class HuffmanCompression {
 // #########################################################################################################################
     
     // this recursive function turns letters into binary code using given tree!
-    public static void EncodeCharacters(Node root , String binary , Map<Character , String> BinaryCodes){ 
+    // the last input of this function is for estimating the size of compressed file!!
+    // Map<Integer = frequency , String = Code>
+    public static void EncodeCharacters(Node root , String binary , Map<Character , String> BinaryCodes , Map<Integer , String> SizeEstimator){ 
         
         if(root.left == null && root.right == null){
             root.Code = binary;
             BinaryCodes.put(root.character , root.Code);
+            
+            SizeEstimator.put(root.frequency , root.Code);
             return;
         }
         else{
-            EncodeCharacters(root.left , binary+"0" , BinaryCodes);
-            EncodeCharacters(root.right , binary+"1" , BinaryCodes);
+            EncodeCharacters(root.left , binary+"0" , BinaryCodes ,SizeEstimator);
+            EncodeCharacters(root.right , binary+"1" , BinaryCodes , SizeEstimator);
         }
     }
     
@@ -168,4 +172,25 @@ public class HuffmanCompression {
         writer.close();
                   
     }
+    
+// #########################################################################################################################
+
+    public static int EstimateSize(Map<Integer , String> SizeEstimator){
+        int Size = 0;
+        Size += (8*SizeEstimator.size());   // for each character in code table ...
+        for(Map.Entry<Integer,String> entry : SizeEstimator.entrySet()){
+            Size += ((entry.getValue().length())*entry.getKey()); // for each character in the repeated in the file ...
+            
+            String str = entry.getValue();
+            int temp = (str.length()/8)+8;  // for showing each alloted code in code table ...
+            Size += temp;
+        }
+        
+        //bits to bytes
+        return ((Size/8) + 1);
+        
+    }    
+    
 }
+
+

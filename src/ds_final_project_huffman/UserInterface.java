@@ -108,7 +108,7 @@ public class UserInterface {
         OK.setBorder(new MatteBorder(2, 2, 2, 2, new Color(102, 0, 153)));
         
         JLabel L3 = new JLabel("- The Action was performed Successfully -");         
-        L3.setBounds(80,75,300,30);
+        L3.setBounds(80,60,300,30);
         L3.setForeground(Color.GREEN);
         L3.setFont(new Font("Serif", Font.BOLD, 15));
         
@@ -180,19 +180,42 @@ public class UserInterface {
                         temp = FilePath.charAt(j);
                         j++;
                     }
-                    NewFilePath += "_Compressed.txt";
+                    NewFilePath += "_Compressed.hc";
 
 
                     System.out.println(NewFilePath);
                     Map<Character , Integer> charFreq = HuffmanCompression.Calculate_Frequency(FilePath);
                     Node node = HuffmanCompression.buildHuffmanTree(charFreq);
-
+                    
+                    // for Codes
                     Map<Character , String> BinaryCodes = new HashMap<>();
-                    HuffmanCompression.EncodeCharacters(node, "", BinaryCodes);
+                    
+                    // for size 
+                    Map<Integer , String> SizeEstimator = new HashMap<>();
+                    
+                    HuffmanCompression.EncodeCharacters(node, "", BinaryCodes , SizeEstimator);
 
                     HuffmanCompression.WriteCodedFile(FilePath, NewFilePath, BinaryCodes);
 
                     System.out.println("Encoding was safe and sound!");
+                    System.out.println();
+                    String str1 = Integer.toString(HuffmanCompression.EstimateSize(SizeEstimator));
+                    File OrgFile = new File(FilePath); 
+                    String str2 = Integer.toString((int)OrgFile.length());
+                    
+                    JLabel ComSize = new JLabel("Compressed file's size : "+str1+ " bytes");         
+                    ComSize.setBounds(105,80,300,30);
+                    ComSize.setForeground(Color.ORANGE);
+                    ComSize.setFont(new Font("Serif", Font.BOLD, 15));
+                    ActionResult.add(ComSize);
+                    
+                    JLabel OrgSize = new JLabel("Original file's size : "+ str2 + " bytes");         
+                    OrgSize.setBounds(110,100,300,30);
+                    OrgSize.setForeground(Color.ORANGE);
+                    OrgSize.setFont(new Font("Serif", Font.BOLD, 15));
+                    ActionResult.add(OrgSize);
+                    
+                    ActionResult.add(OKBackGroundPic);
                     
                     EncodeFrame.setVisible(false);
                     ActionResult.setVisible(true);
