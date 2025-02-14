@@ -1,276 +1,307 @@
 package ds_final_project_huffman;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map; 
-import javax.swing.border.MatteBorder;
+import java.util.Map;
 
 public class UserInterface {
-    public UserInterface(){
-        
-        JFrame [] jFrames = new JFrame[3]; 
-        
-        JFrame MainFrame = new JFrame("Main Frame"); 
-        jFrames[0] = MainFrame;
-        
-        JFrame EncodeFrame = new JFrame("Encode");
-        jFrames[1] = EncodeFrame;
-        
-        JFrame DecodeFrame = new JFrame("Encode");
-        jFrames[2] = DecodeFrame;
-        
-        
-        
-        
-        JButton EncodeButton = new JButton("Encode selected file");
-        EncodeButton.setBounds(275,170,250,45);
-        EncodeButton.setBackground(new Color(28, 0, 58));
-        EncodeButton.setForeground(Color.WHITE);
-        EncodeButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
-        
-        
-        JButton DecodeButton = new JButton("Decode selected file");  
-        DecodeButton.setBounds(275,230,250,45);
-        DecodeButton.setBackground(new Color(28, 0, 58));
-        DecodeButton.setForeground(Color.WHITE);
-        DecodeButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
-        
 
-        JButton openFileToEncodeItButton = new JButton("Open File"); 
-        openFileToEncodeItButton.setBounds(280,200,250,45);
-        openFileToEncodeItButton.setBackground(new Color(28, 0, 58));
-        openFileToEncodeItButton.setForeground(Color.WHITE);
-        openFileToEncodeItButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
-        
-        JButton openFileToDecodeItButton = new JButton("Open File"); 
-        openFileToDecodeItButton.setBounds(280,200,250,45);
-        openFileToDecodeItButton.setBackground(new Color(28, 0, 58));
-        openFileToDecodeItButton.setForeground(Color.WHITE);
-        openFileToDecodeItButton.setBorder(new MatteBorder(3, 3, 3, 3, new Color(128, 0, 128)));
-        
-
-        
-        
-        JLabel L1 = new JLabel("Please choose the file you want to Encode");         
-        L1.setBounds(270,145,440,30);
-        L1.setForeground(Color.WHITE);
-        L1.setFont(new Font("Serif", Font.BOLD, 15));
-        
-        JLabel L2 = new JLabel("Please choose the file you want to Decode");         
-        L2.setBounds(270,145,440,30);
-        L2.setForeground(Color.WHITE);
-        L2.setFont(new Font("Serif", Font.BOLD, 15));
-   
-        
-        for(int i = 0 ; i < jFrames.length ; i++){
-            JLabel BackGroundPic = new JLabel(new ImageIcon("MainPic.jpg"));
-            BackGroundPic.setBounds(0, 0,850,478); 
-            
-            if(i == 0){  //MainFrame
-                jFrames[i].setVisible(true);
-                jFrames[i].add(EncodeButton);
-                jFrames[i].add(DecodeButton);
-            }
-            
-            if(i == 1){  //EncodeFrame
-                jFrames[i].setVisible(false);
-                jFrames[i].add(L1);
-                jFrames[i].add(openFileToEncodeItButton); 
-                
-            }
-            
-            if(i == 2){  //DecodeFrame
-                jFrames[i].setVisible(false);
-                jFrames[i].add(L2);
-                jFrames[i].add(openFileToDecodeItButton); 
-            }
-            
-                jFrames[i].setSize(850,478);
-                jFrames[i].setResizable(false);
-                jFrames[i].getContentPane().setBackground(Color.BLACK);
-                jFrames[i].setLayout(null);          
-                jFrames[i].setLocationRelativeTo(null);  
-                jFrames[i].add(BackGroundPic);          
-        }
-        
-        
-        
-        
-        JButton OK = new JButton("OK"); 
-        OK.setBounds(140,140,150,40);
-        OK.setBackground(new Color(28, 0, 58));
-        OK.setForeground(Color.WHITE);
-        OK.setBorder(new MatteBorder(2, 2, 2, 2, new Color(102, 0, 153)));
-        
-        JLabel L3 = new JLabel("- The Action was performed Successfully -");         
-        L3.setBounds(80,60,300,30);
-        L3.setForeground(Color.GREEN);
-        L3.setFont(new Font("Serif", Font.BOLD, 15));
-        
-        JLabel OKBackGroundPic = new JLabel(new ImageIcon("ActionResultPic.jpg"));
-        OKBackGroundPic.setBounds(0, 0,450,253); 
-        
-        JFrame ActionResult = new JFrame();
-        ActionResult.setSize(450,253);
-        ActionResult.setResizable(false);
-        ActionResult.getContentPane().setBackground(Color.BLACK);
-        ActionResult.setLayout(null);          
-        ActionResult.setLocationRelativeTo(null);
-        ActionResult.setVisible(false);
-        ActionResult.add(L3);
-        ActionResult.add(OK);
-        ActionResult.add(OKBackGroundPic);
-
-                  
-        
-// ########################## BUTTONs' actions ############################################################### 
-
-    EncodeButton.addActionListener(new ActionListener(){
+    // پنل سفارشی با پس‌زمینه گرادیان بنفش
+    static class GradientPanel extends JPanel {
         @Override
-        public void actionPerformed(ActionEvent e){
-            MainFrame.setVisible(false);
-            EncodeFrame.setVisible(true);
- 
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            int w = getWidth();
+            int h = getHeight();
+            Color color1 = new Color(28, 0, 58);
+            Color color2 = new Color(128, 0, 128);
+            GradientPaint gp = new GradientPaint(0, 0, color1, w, h, color2);
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, w, h);
         }
+    }
+
+    // حاشیه گرد برای دکمه‌ها
+    static class RoundedBorder implements Border {
+        private int radius;
+        public RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(radius+1, radius+1, radius+2, radius);
+        }
+        @Override
+        public boolean isBorderOpaque() {
+            return true;
+        }
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.setColor(new Color(128, 0, 128));
+            g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+        }
+    }
+
+    public UserInterface() {
+        // استفاده از Nimbus Look & Feel در صورت موجود بودن
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+                if ("Nimbus".equals(info.getName())){
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch(Exception e) {
+            // در صورت بروز مشکل، از ظاهر پیش‌فرض استفاده می‌شود.
+        }
+        
+        // تعریف فریم‌ها و پنل‌های دارای پس‌زمینه گرادیان و لایه‌بندی با GridBagLayout
+        JFrame mainFrame = new JFrame("Main Frame");
+        JFrame encodeFrame = new JFrame("Encode");
+        JFrame decodeFrame = new JFrame("Decode");
+        JFrame actionResultFrame = new JFrame("Result");
+        
+        GradientPanel mainPanel = new GradientPanel();
+        mainPanel.setLayout(new GridBagLayout());
+        GradientPanel encodePanel = new GradientPanel();
+        encodePanel.setLayout(new GridBagLayout());
+        GradientPanel decodePanel = new GradientPanel();
+        decodePanel.setLayout(new GridBagLayout());
+        GradientPanel resultPanel = new GradientPanel();
+        resultPanel.setLayout(new GridBagLayout());
+        
+        mainFrame.setContentPane(mainPanel);
+        encodeFrame.setContentPane(encodePanel);
+        decodeFrame.setContentPane(decodePanel);
+        actionResultFrame.setContentPane(resultPanel);
+        
+        // تنظیمات عمومی فریم‌ها
+        JFrame[] frames = {mainFrame, encodeFrame, decodeFrame};
+        for (JFrame frame : frames) {
+            frame.setSize(850, 478);
+            frame.setResizable(false);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        actionResultFrame.setSize(450, 253);
+        actionResultFrame.setResizable(false);
+        actionResultFrame.setLocationRelativeTo(null);
+        actionResultFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        // تعریف فونت‌های سفارشی
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 18);
+        Font buttonFont = new Font("Segoe UI", Font.BOLD, 16);
+        
+        // ------------------------ اجزای MainFrame ------------------------
+        JButton encodeButton = new JButton("Encode selected file");
+        encodeButton.setBackground(new Color(28, 0, 58));
+        encodeButton.setForeground(Color.WHITE);
+        encodeButton.setFont(buttonFont);
+        encodeButton.setBorder(new RoundedBorder(10));
+        encodeButton.setFocusPainted(false);
+        encodeButton.setToolTipText("Select a file to encode");
+
+        JButton decodeButton = new JButton("Decode selected file");
+        decodeButton.setBackground(new Color(28, 0, 58));
+        decodeButton.setForeground(Color.WHITE);
+        decodeButton.setFont(buttonFont);
+        decodeButton.setBorder(new RoundedBorder(10));
+        decodeButton.setFocusPainted(false);
+        decodeButton.setToolTipText("Select a file to decode");
+        
+        // ------------------------ اجزای EncodeFrame ------------------------
+        JLabel encodeLabel = new JLabel("Please choose the file you want to Encode");
+        encodeLabel.setForeground(Color.WHITE);
+        encodeLabel.setFont(labelFont);
+        encodeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        JButton openFileToEncodeButton = new JButton("Open File");
+        openFileToEncodeButton.setBackground(new Color(28, 0, 58));
+        openFileToEncodeButton.setForeground(Color.WHITE);
+        openFileToEncodeButton.setFont(buttonFont);
+        openFileToEncodeButton.setBorder(new RoundedBorder(10));
+        openFileToEncodeButton.setFocusPainted(false);
+        openFileToEncodeButton.setToolTipText("Open a file to encode");
+        
+        // ------------------------ اجزای DecodeFrame ------------------------
+        JLabel decodeLabel = new JLabel("Please choose the file you want to Decode");
+        decodeLabel.setForeground(Color.WHITE);
+        decodeLabel.setFont(labelFont);
+        decodeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        JButton openFileToDecodeButton = new JButton("Open File");
+        openFileToDecodeButton.setBackground(new Color(28, 0, 58));
+        openFileToDecodeButton.setForeground(Color.WHITE);
+        openFileToDecodeButton.setFont(buttonFont);
+        openFileToDecodeButton.setBorder(new RoundedBorder(10));
+        openFileToDecodeButton.setFocusPainted(false);
+        openFileToDecodeButton.setToolTipText("Open a file to decode");
+        
+        // ------------------------ اجزای ActionResultFrame ------------------------
+        JLabel resultLabel = new JLabel("- The Action was performed Successfully -");
+        resultLabel.setForeground(Color.GREEN);
+        resultLabel.setFont(labelFont);
+        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        JButton okButton = new JButton("OK");
+        okButton.setBackground(new Color(28, 0, 58));
+        okButton.setForeground(Color.WHITE);
+        okButton.setFont(buttonFont);
+        okButton.setBorder(new RoundedBorder(10));
+        okButton.setFocusPainted(false);
+        okButton.setToolTipText("Close application");
+        
+        // ------------------------ قرار دادن اجزا با استفاده از GridBagLayout ------------------------
+        // برای صفحه اصلی (MainFrame) دکمه‌ها بزرگتر شوند
+        GridBagConstraints gbcMain = new GridBagConstraints();
+        gbcMain.insets = new Insets(15, 15, 15, 15);
+        gbcMain.fill = GridBagConstraints.HORIZONTAL;
+        gbcMain.gridx = 0;
+        gbcMain.gridy = 0;
+        // افزایش فضای داخلی دکمه‌ها
+        gbcMain.ipadx = 50;
+        gbcMain.ipady = 20;
+        mainPanel.add(encodeButton, gbcMain);
+        gbcMain.gridy = 1;
+        mainPanel.add(decodeButton, gbcMain);
+        
+        // EncodeFrame: قرار دادن JLabel در ردیف اول و دکمه انتخاب فایل در ردیف دوم
+        GridBagConstraints gbcEncode = new GridBagConstraints();
+        gbcEncode.insets = new Insets(15, 15, 15, 15);
+        gbcEncode.fill = GridBagConstraints.HORIZONTAL;
+        gbcEncode.gridx = 0;
+        gbcEncode.gridy = 0;
+        encodePanel.add(encodeLabel, gbcEncode);
+        gbcEncode.gridy = 1;
+        encodePanel.add(openFileToEncodeButton, gbcEncode);
+        
+        // DecodeFrame: قرار دادن JLabel در ردیف اول و دکمه انتخاب فایل در ردیف دوم
+        GridBagConstraints gbcDecode = new GridBagConstraints();
+        gbcDecode.insets = new Insets(15, 15, 15, 15);
+        gbcDecode.fill = GridBagConstraints.HORIZONTAL;
+        gbcDecode.gridx = 0;
+        gbcDecode.gridy = 0;
+        decodePanel.add(decodeLabel, gbcDecode);
+        gbcDecode.gridy = 1;
+        decodePanel.add(openFileToDecodeButton, gbcDecode);
+        
+        // ActionResultFrame: قرار دادن JLabel در ردیف اول و دکمه OK در ردیف دوم
+        GridBagConstraints gbcResultLabel = new GridBagConstraints();
+        gbcResultLabel.insets = new Insets(15, 15, 5, 15);
+        gbcResultLabel.fill = GridBagConstraints.HORIZONTAL;
+        gbcResultLabel.gridx = 0;
+        gbcResultLabel.gridy = 0;
+        resultPanel.add(resultLabel, gbcResultLabel);
+        
+        GridBagConstraints gbcResultButton = new GridBagConstraints();
+        gbcResultButton.insets = new Insets(5, 15, 15, 15);
+        gbcResultButton.fill = GridBagConstraints.NONE;
+        gbcResultButton.gridx = 0;
+        gbcResultButton.gridy = 1;
+        // کاهش فضای داخلی دکمه OK برای اندازه مناسب‌تر
+        gbcResultButton.ipadx = 20;
+        gbcResultButton.ipady = 5;
+        resultPanel.add(okButton, gbcResultButton);
+        
+        // ------------------------ اکشن‌های دکمه‌ها ------------------------
+        encodeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                mainFrame.setVisible(false);
+                encodeFrame.setVisible(true);
+            }
         });
-// -----------------------------------------------------------------------------------------------------------   
-
-    DecodeButton.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e){
-            MainFrame.setVisible(false);
-            DecodeFrame.setVisible(true);
-
-        }
+        
+        decodeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                mainFrame.setVisible(false);
+                decodeFrame.setVisible(true);
+            }
         });
-    
-// -----------------------------------------------------------------------------------------------------------   
+        
+        okButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        });
+        
+        openFileToEncodeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try {
+                    JFileChooser fileChooser = new JFileChooser();
+                    int returnValue = fileChooser.showOpenDialog(null);
+                    if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+                        String filePath = selectedFile.getAbsolutePath();
 
-    OK.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e){
-            System.exit(0);
-        }
-        });    
-    
-// -----------------------------------------------------------------------------------------------------------  
+                        String newFilePath = "";
+                        int j = 0;
+                        while (j < filePath.length() && filePath.charAt(j) != '.') {
+                            newFilePath += filePath.charAt(j);
+                            j++;
+                        }
+                        newFilePath += "_Compressed.hff";
 
-    openFileToEncodeItButton.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-            try{
-                
-                JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if(returnValue == JFileChooser.APPROVE_OPTION){
-                    File selectedFile = fileChooser.getSelectedFile();     
-                    String FilePath = selectedFile.getAbsolutePath(); 
+                        Map<Character, Integer> freqMap = HuffmanCompression.Calculate_Frequency(filePath);
+                        Node root = HuffmanCompression.buildHuffmanTree(freqMap);
 
-                    String NewFilePath = "";
-                    char temp = FilePath.charAt(0);
-                    int j = 1;
-                    while(temp != '.'){
-                        NewFilePath += Character.toString(temp);
-                        temp = FilePath.charAt(j);
-                        j++;
+                        Map<Character, String> binaryCodes = new HashMap<>();
+                        HuffmanCompression.EncodeCharacters(root, "", binaryCodes);
+
+                        HuffmanCompression.writeCompressedFile(filePath, newFilePath, binaryCodes, root);
+
+                        System.out.println("Encoding was safe and sound!");
+
+                        encodeFrame.setVisible(false);
+                        actionResultFrame.setVisible(true);
                     }
-                    NewFilePath += "_Compressed.hc";
-
-
-                    System.out.println(NewFilePath);
-                    Map<Character , Integer> charFreq = HuffmanCompression.Calculate_Frequency(FilePath);
-                    Node node = HuffmanCompression.buildHuffmanTree(charFreq);
-                    
-                    // for Codes
-                    Map<Character , String> BinaryCodes = new HashMap<>();
-                    
-                    // for size 
-                    Map<Integer , String> SizeEstimator = new HashMap<>();
-                    
-                    HuffmanCompression.EncodeCharacters(node, "", BinaryCodes , SizeEstimator);
-
-                    HuffmanCompression.WriteCodedFile(FilePath, NewFilePath, BinaryCodes);
-
-                    System.out.println("Encoding was safe and sound!");
-                    System.out.println();
-                    String str1 = Integer.toString(HuffmanCompression.EstimateSize(SizeEstimator));
-                    File OrgFile = new File(FilePath); 
-                    String str2 = Integer.toString((int)OrgFile.length());
-                    
-                    JLabel ComSize = new JLabel("Compressed file's size : "+str1+ " bytes");         
-                    ComSize.setBounds(105,80,300,30);
-                    ComSize.setForeground(Color.ORANGE);
-                    ComSize.setFont(new Font("Serif", Font.BOLD, 15));
-                    ActionResult.add(ComSize);
-                    
-                    JLabel OrgSize = new JLabel("Original file's size : "+ str2 + " bytes");         
-                    OrgSize.setBounds(110,100,300,30);
-                    OrgSize.setForeground(Color.ORANGE);
-                    OrgSize.setFont(new Font("Serif", Font.BOLD, 15));
-                    ActionResult.add(OrgSize);
-                    
-                    ActionResult.add(OKBackGroundPic);
-                    
-                    EncodeFrame.setVisible(false);
-                    ActionResult.setVisible(true);
-
+                } catch(IOException ex) {
+                    System.err.println("Encoding was not successful!");
+                }
             }
-            }
-            
-            catch(IOException P){
-                System.err.print("Encoding was not successful!");
-            }
-        }
         });
-    
-    
-    
-// -----------------------------------------------------------------------------------------------------------   
-    
-        openFileToDecodeItButton.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e){
-            
-            try{
-                
-                JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if(returnValue == JFileChooser.APPROVE_OPTION){
-                    File selectedFile = fileChooser.getSelectedFile();     
-                    String FilePath = selectedFile.getAbsolutePath(); 
+        
+        openFileToDecodeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try {
+                    JFileChooser fileChooser = new JFileChooser();
+                    int returnValue = fileChooser.showOpenDialog(null);
+                    if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+                        String filePath = selectedFile.getAbsolutePath();
 
-                    String NewFilePath = "";
-                    char temp = FilePath.charAt(0);
-                    int j = 1;
-                    while(temp != '.'){
-                        NewFilePath += Character.toString(temp);
-                        temp = FilePath.charAt(j);
-                        j++;
+                        String newFilePath = "";
+                        int j = 0;
+                        while (j < filePath.length() && filePath.charAt(j) != '.') {
+                            newFilePath += filePath.charAt(j);
+                            j++;
+                        }
+                        newFilePath += "_DeCompressed.txt";
+
+                        HuffmanCompression.decodeCompressedFile(filePath, newFilePath);
+
+                        System.out.println("Decoding was safe and sound!");
+
+                        decodeFrame.setVisible(false);
+                        actionResultFrame.setVisible(true);
                     }
-                    NewFilePath += "_DeCompressed.txt";
-                    
-                    Map<String , Character> bn = HuffmanCompression.readCodeTable(FilePath);
-                    HuffmanCompression.DecodeCodedFile(FilePath, NewFilePath, bn);
-                    
-                    System.out.println("Decoding was safe and sound!");
-                    
-                    DecodeFrame.setVisible(false);
-                    ActionResult.setVisible(true);
-
+                } catch(IOException ex) {
+                    System.err.println("Decoding was not successful!");
+                }
             }
-            }
-            
-            catch(IOException P){
-                System.err.print("Decoding was not successful!");
-            }
-        }
         });
-
+        
+        // نمایش فریم اصلی
+        mainFrame.setVisible(true);
     }
 }

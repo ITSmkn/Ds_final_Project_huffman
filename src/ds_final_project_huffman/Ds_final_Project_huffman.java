@@ -1,8 +1,10 @@
 package ds_final_project_huffman;
  
-public class Ds_final_Project_huffman {
+import java.io.IOException;
 
-    public static void main(String[] args) { 
-            UserInterface UI = new UserInterface();     
-    }   
+public class Ds_final_Project_huffman {
+ 
+    public static void main(String[] args) throws IOException {
+      UserInterface UI = new UserInterface();
+    }
 }
